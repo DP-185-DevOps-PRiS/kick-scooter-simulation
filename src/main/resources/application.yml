@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: simulation-service
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVERS}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: >
+          raw:com.softserve.kickscootersimplesimulation.dto.ScooterRawDataDto
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_SERVER}/eureka/
+
+feign:
+  client:
+    config:
+      default:
+        readTimeout: 160000000
+
+service-token: ${SERVICE_TOKEN}
+
+logging:
+  file:
+    path: /var/log/simulation
+
